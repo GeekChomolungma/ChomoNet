@@ -32,7 +32,7 @@ else:
 # --- 2) Calculate indicators ------------------------------------------------
 vrb_inst = VolatilityReversionBands(df)
 df_vrb = vrb_inst.compute(
-    length=20, mult=2.0, atr_mult=1.5, src_col="close",
+    length=24, mult=2.5, atr_mult=1, src_col="close",
     weak_signals=True, prefix="vrb", inplace=False
 )
 
