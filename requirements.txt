@@ -1,0 +1,5 @@
+pymongo
+dotenv
+pandas
+numpy
+matplotlib
