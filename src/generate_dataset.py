@@ -42,6 +42,8 @@ df_st = st_inst.to_dataframe(st, alerts, prefix="st")
 
 # --- 3) Select required columns ---------------------------------------------
 df_out = df_vrb.join(df_st, how="left")
+cols_to_export = ["starttime","close","high","interval","low","open","quotevolume","symbol","tradenum","volume","vrb_bb_upper","vrb_bb_lower","st_line","st_dir","st_up","st_dn"]
+df_out[cols_to_export].to_csv("../archive/dataset/vrb_supertrend_output.csv", index=False)
 
 close = df_out["close"].astype(float)
 # VRB upper/lower boundaries (in the screenshot: purple and light green)

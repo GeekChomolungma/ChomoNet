@@ -1,0 +1,58 @@
+
+seed: 42
+device: cuda
+
+data:
+  csv_path: ../archive/dataset/btc_vrb_supertrend_output.csv
+  time_col: starttime
+
+  # original features
+  x_cols: ["open","high","low","close","quotevolume","tradenum","volume",
+           "vrb_bb_upper","vrb_bb_lower","st_line","st_dir","st_up","st_dn"]
+
+  # rolling Z score
+  x_z_cols: ["open","high","low","close","quotevolume","tradenum","volume",
+            "vrb_bb_upper","vrb_bb_lower","st_line","st_up","st_dn"]
+
+  y_col: null
+  price_col: close
+  target_kind: logret
+  seq_len: 96
+  horizon: 1
+  batch_size: 128
+  train_ratio: 0.8
+  gap: 0
+  num_workers: 0
+  shuffle_train: false
+  norm: rolling
+  rolling_win: 30
+
+model:
+  d_model: 128
+  nhead: 4
+  num_layers: 4
+  d_ff: 256
+  dropout: 0.1
+  out_dim: 1
+  use_last_token: true
+
+optim:
+  lr: 3.0e-5
+  weight_decay: 1.0e-4
+  epochs: 50
+  amp: false
+  grad_clip: 1.0
+
+io:
+  out_dir: ../results/checkpoints
+  save_best_only: true 
+  metric: val_loss
+
+wandb:
+  enabled: true          
+  project: "chomo-trading"
+  entity: "XiaoxuanZhangUvA"
+  mode: "online"         # "online" | "offline" | "disabled"
+  tags: ["btc", "transformer", "4h"]
+  notes: "baseline run"
+  group: "btc-exp-001"
