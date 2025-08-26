@@ -9,6 +9,7 @@ data:
   # original features
   x_cols: ["open","high","low","close","quotevolume","tradenum","volume",
            "vrb_bb_upper","vrb_bb_lower","st_line","st_dir","st_up","st_dn"]
+  # x_cols: ["open","high","low","close","quotevolume","tradenum","volume"]
 
   # rolling Z score
   x_z_cols: ["open","high","low","close","quotevolume","tradenum","volume",
@@ -39,17 +40,18 @@ model:
 optim:
   lr: 3.0e-5
   weight_decay: 1.0e-4
-  epochs: 50
+  epochs: 100
   amp: false
   grad_clip: 1.0
 
 io:
-  out_dir: ../results/checkpoints
+  out_dir: ../results/checkpoints/OHLCV
   save_best_only: true 
   metric: val_loss
 
 wandb:
-  enabled: true          
+  enabled: true
+  dir: ../results/OHLCV
   project: "chomo-trading"
   entity: "XiaoxuanZhangUvA"
   mode: "online"         # "online" | "offline" | "disabled"

@@ -7,7 +7,7 @@ import wandb
 import torch.nn as nn
 from torch import amp
 
-from data_loader.loader_vrb_st import make_dataloaders_financial
+from data_loader.loader_general import make_dataloaders_financial
 from network.chomo_transformer import ChomoTransformer_forBTC
 
 torch.backends.cuda.matmul.allow_tf32 = True
@@ -47,6 +47,7 @@ def main(cfg):
     if use_wandb:
         run = wandb.init(
             project=wb.get("project", "chomo-trading"),
+            dir=wb.get("dir", None),
             # entity=wb.get("entity", None),
             mode=wb.get("mode", "online"),
             config=cfg,                         # record the config so that easy to reproduce

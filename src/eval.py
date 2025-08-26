@@ -1,20 +1,21 @@
 
 import argparse, torch, yaml
-from data_loader.loader_vrb_st import make_dataloaders_financial_forBTC
+from data_loader.loader_general import make_dataloaders_financial
 from network.chomo_transformer import ChomoTransformer_forBTC
 
-def load_checkpoint_forBTC(path, device):
+def load_checkpoint(path, device):
     ckpt = torch.load(path, map_location=device)
     return ckpt["model_state"], ckpt["meta"], ckpt["cfg"]
 
 def main(args):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    state_dict, meta, cfg = load_checkpoint_forBTC(args.checkpoint, device)
+    state_dict, meta, cfg = load_checkpoint(args.checkpoint, device)
 
     d = cfg["data"]
-    _, val_loader, meta2 = make_dataloaders_financial_forBTC(
+    _, val_loader, meta2 = make_dataloaders_financial(
         csv_path=d["csv_path"],
         x_cols=d["x_cols"],
+        x_z_cols=d.get("x_z_cols", None),
         seq_len=d["seq_len"],
         horizon=d["horizon"],
         y_col=d.get("y_col", None),
